@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #1a1614;
+  --color-surface: #25211e;
+  --color-primary: #e8dcd0;
+  --color-accent: #d4a373;
+  --color-muted: #b5a496;
+  --color-border: #3d3631;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #1a1614;
+  color: #e8dcd0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #d4a373;
+  color: #1a1614;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #d4a373;
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1614;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3d3631;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4a373;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+video {
+  background-color: #000;
+}
+
+/* Utility classes for custom colors */
+.bg-background { background-color: #1a1614; }
+.bg-surface { background-color: #25211e; }
+.bg-accent { background-color: #d4a373; }
+.text-primary { color: #e8dcd0; }
+.text-accent { color: #d4a373; }
+.text-muted { color: #b5a496; }
+.text-background { color: #1a1614; }
+.border-border { border-color: #3d3631; }
+.border-accent { border-color: #d4a373; }
+
+/* Opacity variants */
+.bg-background\/80 { background-color: rgba(26, 22, 20, 0.8); }
+.bg-background\/95 { background-color: rgba(26, 22, 20, 0.95); }
+.bg-surface\/50 { background-color: rgba(37, 33, 30, 0.5); }
+.bg-accent\/5 { background-color: rgba(212, 163, 115, 0.05); }
+.bg-accent\/10 { background-color: rgba(212, 163, 115, 0.1); }
+.border-border\/30 { border-color: rgba(61, 54, 49, 0.3); }
+.border-accent\/30 { border-color: rgba(212, 163, 115, 0.3); }
+.text-accent\/80 { color: rgba(212, 163, 115, 0.8); }
+
+/* Hover states */
+.hover\:text-accent:hover { color: #d4a373; }
+.hover\:bg-accent:hover { background-color: #d4a373; }
+.hover\:text-background:hover { color: #1a1614; }
+.hover\:border-accent:hover { border-color: #d4a373; }
+.hover\:bg-accent\/10:hover { background-color: rgba(212, 163, 115, 0.1); }
+.group:hover .group-hover\:text-accent { color: #d4a373; }
+.group:hover .group-hover\:scale-110 { transform: scale(1.1); }
