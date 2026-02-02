@@ -57,16 +57,16 @@ export const projects = [
   },
   {
     id: 5,
-    title: "E-Commerce App",
-    description: "A modern shopping application UI built using Flutter, designed to provide users with a smooth and intuitive online shopping experience. Features product browsing, cart management, and a seamless checkout flow with beautiful grid layouts.",
-    tech: ["Flutter", "UI/UX", "Dart", "E-Commerce"],
+    title: "Coffee Shop App",
+    description: "A beautifully designed coffee shop mobile application built with Flutter, offering users an elegant way to browse coffee selections, customize their orders, and enjoy a seamless ordering experience. Features a warm, inviting UI that captures the essence of a cozy coffee shop.",
+    tech: ["Flutter", "UI/UX", "Dart", "Food & Beverage"],
     video: "/coffee.mp4",
     features: [
-      "Browse products with grid layouts",
-      "View detailed product information",
-      "Add items to cart and manage quantities",
-      "Seamless checkout experience",
-      "Responsive and visually appealing design"
+      "Browse coffee menu with stunning visuals",
+      "Customize drinks with size, milk, and extras",
+      "Add items to cart and manage orders",
+      "View detailed coffee descriptions and prices",
+      "Beautiful warm-themed UI design"
     ]
   }
 ];

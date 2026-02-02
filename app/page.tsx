@@ -1,5 +1,5 @@
 "use client";
-import { Github, Linkedin, Smartphone, Mail, Code2, Database, Server, X, ExternalLink, CheckCircle2 } from "lucide-react";
+import { Github, Linkedin, Smartphone, Mail, Code2, Database, Server, X, ExternalLink, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../constant/projects";
 import React, { useState } from "react";
@@ -23,6 +23,15 @@ const skills = [
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
+  };
 
   return (
     <main className="min-h-screen bg-background text-primary">
@@ -142,41 +151,114 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROJECTS */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-24 md:py-32 border-t border-border/30">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-sm font-mono text-accent mb-4 uppercase tracking-[0.3em]">01. Selected Projects</h2>
-          <p className="text-muted mb-12 md:mb-16 max-w-lg">A collection of mobile applications I&apos;ve designed and developed.</p>
-        </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((item, index) => (
+      {/* PROJECTS SLIDER */}
+      <section id="projects" className="py-24 md:py-32 border-t border-border/30">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16"
+          >
+            <div>
+              <h2 className="text-sm font-mono text-accent mb-4 uppercase tracking-[0.3em]">01. Selected Projects</h2>
+              <p className="text-muted max-w-lg">A collection of mobile applications I&apos;ve designed and developed.</p>
+            </div>
+            {/* Slider Controls */}
+            <div className="flex items-center gap-4 mt-6 md:mt-0">
+              <button
+                onClick={prevSlide}
+                className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
+                aria-label="Previous project"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <span className="text-sm font-mono text-muted">
+                <span className="text-accent">{String(currentSlide + 1).padStart(2, '0')}</span> / {String(projects.length).padStart(2, '0')}
+              </span>
+              <button
+                onClick={nextSlide}
+                className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
+                aria-label="Next project"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Slider Container */}
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => setSelectedProject(item as Project)}
-              className="group bg-surface border border-border p-6 md:p-8 rounded-3xl hover:border-accent transition-all shadow-xl cursor-pointer"
-              style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+              key={currentSlide}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center cursor-pointer"
+              onClick={() => setSelectedProject(projects[currentSlide] as Project)}
             >
-              <div className="flex items-center justify-between mb-6">
-                <Smartphone className="text-accent" size={28} />
-                <ExternalLink className="text-muted group-hover:text-accent transition-colors" size={18} />
+              {/* Project Video/Preview */}
+              <div className="relative aspect-video bg-surface rounded-3xl overflow-hidden border border-border group">
+                {projects[currentSlide].video ? (
+                  <video
+                    src={projects[currentSlide].video}
+                    className="w-full h-full object-cover"
+                    muted
+                    loop
+                    playsInline
+                    autoPlay
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-surface">
+                    <Smartphone className="text-accent" size={64} />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-accent text-background px-6 py-3 rounded-full font-bold text-sm">View Details</span>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-3 tracking-tight group-hover:text-accent transition-colors">{item.title}</h3>
-              <p className="text-muted text-sm mb-6 line-clamp-2 leading-relaxed">{item.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {item.tech.slice(0, 3).map(t => (
-                  <span key={t} className="text-[10px] font-mono border border-border px-3 py-1 rounded-full uppercase text-accent/80 bg-accent/5">{t}</span>
-                ))}
+
+              {/* Project Info */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <Smartphone className="text-accent" size={24} />
+                  <span className="text-sm font-mono text-accent">Project {String(currentSlide + 1).padStart(2, '0')}</span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">{projects[currentSlide].title}</h3>
+                <p className="text-muted mb-6 leading-relaxed">{projects[currentSlide].description}</p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {projects[currentSlide].tech.map(t => (
+                    <span key={t} className="text-xs font-mono border border-border px-4 py-2 rounded-full uppercase text-accent/80 bg-accent/5">{t}</span>
+                  ))}
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedProject(projects[currentSlide] as Project);
+                  }}
+                  className="inline-flex items-center gap-2 text-accent hover:text-primary transition-colors font-medium"
+                >
+                  View Project <ExternalLink size={16} />
+                </button>
               </div>
             </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="flex justify-center gap-2 mt-12">
+          {projects.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                currentSlide === index ? 'bg-accent w-8' : 'bg-border hover:bg-muted'
+              }`}
+              aria-label={`Go to project ${index + 1}`}
+            />
           ))}
         </div>
       </section>

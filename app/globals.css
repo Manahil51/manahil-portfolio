@@ -93,3 +93,14 @@ video {
 .hover\:bg-accent\/10:hover { background-color: rgba(212, 163, 115, 0.1); }
 .group:hover .group-hover\:text-accent { color: #d4a373; }
 .group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+.group:hover .group-hover\:opacity-100 { opacity: 1; }
+
+/* Slider transitions */
+.slider-container {
+  touch-action: pan-y;
+}
+
+/* Aspect ratio for video */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
